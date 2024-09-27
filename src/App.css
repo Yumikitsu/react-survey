@@ -96,6 +96,10 @@ h2 {
   margin: 0.5rem;
 }
 
+.answer-edit {
+  margin-right: 10px;
+}
+
 .form {
   width: 80%;
   margin: 3rem auto;

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
     "json-server": "^1.0.0-beta.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -23,5 +25,10 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "vite": "^4.4.5"
-  }
+  },
+  "description": "With this exercise, we're going to create a survey and have some more practice creating forms. They're not exactly the\r easiest or most fun to create, but they're everywhere! (We could even argue that the web isn't much more than a \r bunch of forms). This will also give you some hands-on time with creating controlled forms in React.",
+  "main": "vite.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from 'axios';
 import AnswersList from "./AnswersList";
 
 function Survey() {
@@ -68,6 +69,14 @@ function Survey() {
   // Keeps track of all the submitted data
   const [submittedData, setSubmittedData] = useState([])
 
+  useEffect(() => {
+    axios.get('http://localhost:3000/answers')
+      .then(response => {
+        setSubmittedData(response.data)
+      })
+      .catch(error => console.error('Error fetching data:', error))
+  }, [])
+
   // Key to give each form a unique key value
   const [formKey, setFormKey] = useState(Date.now())
 
@@ -78,14 +87,31 @@ function Survey() {
     event.preventDefault()
     console.log(formData)
 
-    // Set edit mode to false
-    setEditMode(false)
+    if(editMode) {
+      axios.put(`http://localhost:3000/answers/${formData.id}`, formData)
+        .then(response => {
+          console.log(response.data)
+          handleSubmittedData()
+          setFormData(initialFormData())
+          // Set edit mode to false
+          setEditMode(false)
+        })
+        .catch(error => console.error('Error updating data:', error))
+    } else {
+      axios.post('http://localhost:3000/answers', formData)
+        .then(response => {
+          console.log(response.data)
+          handleSubmittedData()
+          setFormData(initialFormData())
+        })
+        .catch(error => console.error('Error updating data:', error))
+    }
 
     // Add the formData to the submitted data list
-    handleSubmittedData()
+    //handleSubmittedData()
 
     // Reset the form data
-    setFormData(initialFormData())
+    //setFormData(initialFormData())
 
     // Update the form key
     setFormKey(Date.now())
@@ -157,7 +183,12 @@ function Survey() {
   const handleAnswerSelection = (id, deleteAnswer) => {
     // If delete is true, remove the answer from answerList
     if (deleteAnswer) {
-      setSubmittedData((data) => data.filter((answer) => answer.id !== id))
+      axios.delete(`http://localhost:3000/answers/${id}`)
+        .then(() => {
+          setSubmittedData((data) => data.filter((answer) => answer.id !== id))
+        })
+        .catch(error => console.error('Error deleting data:', error))
+      //setSubmittedData((data) => data.filter((answer) => answer.id !== id))
     } else { // Set the formData to the submittedData with the same id
       const selectedAnswer = submittedData.find((answer) => answer.id === id)
       if (selectedAnswer) {
