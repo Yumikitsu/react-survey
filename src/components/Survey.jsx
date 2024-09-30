@@ -8,7 +8,7 @@ function Survey() {
 
   // Used for resetting the formData
   const initialFormData = () => ({
-    id: -1,
+    id: "-1",
     consistency: "",
     color: "",
     logo: "",
@@ -38,7 +38,7 @@ function Survey() {
   // Form Data
   const [formData, setFormData] = useState(
     {
-      id: -1,
+      id: "-1",
       consistency: "",
       color: "",
       logo: "",
@@ -145,19 +145,19 @@ function Survey() {
     while(!unique) {
       unique = true
       for(let i = 0; i < submittedData.length; i++) {
-        if (submittedData[i].id === id) {
+        if (submittedData[i].id === `${id}`) {
           id++
           unique = false
           break
         }
       }
     }
-    return id
+    return `${id}`
   }
 
   // Update the form data to give it a unique ID if it's the default id
   useEffect(() => {
-    if (formData.id === -1) {
+    if (formData.id === '-1') {
       setFormData((data) => ({
         ...data, id: newId()
       }))
